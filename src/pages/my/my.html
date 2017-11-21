@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>我</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content >
+  <ion-list>
+    <ion-item (click)="viewSelfDetial()">
+      <ion-avatar item-start >
+        <img src="https://ionicframework.com/dist/preview-app/www/assets/img/marty-avatar.png">
+      </ion-avatar>
+      <h2 class="username">TristanWong</h2>
+    </ion-item>
+  </ion-list>
+  <ion-list no-border>
+    <ion-list-header>
+      General
+    </ion-list-header>
+    <ion-item>
+      <ion-icon name='settings' item-start></ion-icon>
+      <ion-label>App Language</ion-label>
+      <ion-select [(ngModel)]="language">
+        <ion-option *ngFor="let language of languages" [value]="language">{{language}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-toggle [(ngModel)]="enableNotifications" (click)="toggleNotifications()"></ion-toggle>
+      <ion-label class="label"> Enable notifications </ion-label>
+      <ion-icon name='notifications' item-start></ion-icon>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      Currency
+    </ion-list-header>
+    <ion-item>
+      <ion-icon name='card' item-start></ion-icon>
+      <ion-label>Payment Method</ion-label>
+      <ion-select >
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-icon name='logo-usd' item-start></ion-icon>
+      <ion-label>Currency</ion-label>
+      <ion-select >
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list>
+    <ion-list-header>
+      Other
+    </ion-list-header>
+    <ion-item>
+      <ion-icon name='power' item-start></ion-icon>
+      <ion-label>注销</ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
