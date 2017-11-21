@@ -13,6 +13,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {ProfilePage} from "../pages/profile/profile";
 import {HomeNav} from "../pages/nav/nav";
 import {MyPage} from "../pages/my/my";
+import HomeContoller from "../pages/home/home-contoller";
+import {PipesModule} from "../pipes/pipes.module";
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import {MyPage} from "../pages/my/my";
   imports: [
     BrowserModule,
     HttpClientModule,
+    PipesModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -36,11 +39,11 @@ import {MyPage} from "../pages/my/my";
     HomeNav,
     SearchPage,
     MyPage
-
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    HomeContoller,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

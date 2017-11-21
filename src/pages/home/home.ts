@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ModalController, NavController} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {App, Content, LoadingController, ModalController, NavController} from 'ionic-angular';
 import JokeService from "../../services/JokeService";
 import HomeContoller from "./home-contoller";
 import {ProfilePage} from "../profile/profile";
@@ -7,7 +7,7 @@ import {ProfilePage} from "../profile/profile";
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [HomeContoller, JokeService]
+  providers: [JokeService]
 })
 export class HomePage {
   items = [];
@@ -23,9 +23,23 @@ export class HomePage {
     create_time: -1
   };
 
+
+  @ViewChild(Content)
+  public content: Content;
+
+
   constructor(public navCtrl: NavController,
               public ModalCtrl: ModalController,
+              public homeCtrl: HomeContoller,
+              public app: App,
               public jokeService: JokeService) {
+
+  }
+
+  ionViewDidLoad() {
+    this.homeCtrl.scrollUp.subscribe(() => {
+      this.scrollToTop();
+    });
     this.jokeService.list({pagework: this.pagework, sort: this.sort}).subscribe((res: any) => {
       res.forEach(item => {
         this.items.push(item);
@@ -35,10 +49,9 @@ export class HomePage {
 
 
   doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
     setTimeout(() => {
       refresher.complete();
-    }, 2000);
+    }, 1000);
   }
 
   doInfinite(infiniteScroll) {
@@ -51,15 +64,24 @@ export class HomePage {
     });
   }
 
-  viewPerson(userId: string) {
+  viewPerson(userId: string, $event) {
+    if ($event) {
+      $event.stopPropagation();
+    }
     this.ModalCtrl.create(ProfilePage, {userId: userId}, {showBackdrop: true}).present({
       isNavRoot: true,
       disableApp: true
     });
   }
+  viewDetial(item: any) {
+    this.app.getRootNav().push("DetialPage", item, function () {
+      console.log("ok")
+    });
+  }
 
-  viewDetial(item:any) {
-    this.ModalCtrl.create("DetialPage",item).present();
+  scrollToTop() {
+    this.content.scrollToTop(1000);
   }
 }
+
 

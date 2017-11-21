@@ -6,11 +6,7 @@
 -->
 <ion-header>
   <ion-navbar color="primary">
-    <ion-buttons>
-      <button icon-only icon-left ion-button (click)="dismiss()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
+
   </ion-navbar>
 
 </ion-header>
@@ -25,16 +21,14 @@
       <h2>Marty McFly</h2>
       <label item-end> <ion-note>{{item.create_time|date: 'yyyy-MM-dd'}}</ion-note></label>
     </ion-item>
-    <ion-title *ngIf="item.title" (click)="viewDetial(item)" >
+    <ion-title *ngIf="item.title"  >
       <h2>{{item.title}}</h2>
     </ion-title>
     <img *ngFor="let pic of item.pics" [src]="pic">
-    <ion-col col-12 *ngIf="item.content" (click)="viewDetial(item)">
+    <ion-col col-12 *ngIf="item.content" >
       <span [innerHtml]="item.content"></span>
     </ion-col>
   </ion-row>
-
-
 
 </ion-content>
 <ion-footer>

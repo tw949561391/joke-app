@@ -12,15 +12,14 @@
   </ion-navbar>
 </ion-header>
 <ion-content no-padding>
-  <ion-refresher no-border (ionRefresh)="doRefresh($event)">
+  <ion-refresher no-border (ionRefresh)="doRefresh($event)" pullMax="240" pullMin="60">
     <ion-refresher-content
       pullingIcon="arrow-down"
       refreshingSpinner="bubbles">
     </ion-refresher-content>
   </ion-refresher>
-
-  <ion-card *ngFor="let item of items">
-    <ion-item (click)="viewPerson()">
+  <ion-card *ngFor="let item of items" (click)="viewDetial(item)">
+    <ion-item (click)="viewPerson(item.userId,$event)">
       <ion-avatar item-start>
         <img src="https://ionicframework.com/dist/preview-app/www/assets/img/marty-avatar.png">
       </ion-avatar>
@@ -29,30 +28,30 @@
         <ion-note>{{item.create_time|date: 'yyyy-MM-dd'}}</ion-note>
       </h3>
     </ion-item>
-    <ion-card-content *ngIf="item.title" (click)="viewDetial(item)" >
+    <ion-card-content *ngIf="item.title">
       <h2>{{item.title}}</h2>
     </ion-card-content>
     <img *ngIf="item.pics.length > 0 " [src]="item.pics[0]">
-    <ion-card-content *ngIf="item.content" (click)="viewDetial(item)">
+    <ion-card-content *ngIf="item.content">
       <span [innerHtml]="item.content"></span>
     </ion-card-content>
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="thumbs-up"></ion-icon>
-          <div>12 Likes</div>
+          <div>12</div>
         </button>
       </ion-col>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="text"></ion-icon>
-          <div>4 Comments</div>
+          <div>4</div>
         </button>
       </ion-col>
 
       <ion-col col-3 align-self-center text-center>
         <p>
-          20分钟前
+          {{item.create_time|timeline: 'yyyy-MM-dd'}}
         </p>
       </ion-col>
     </ion-row>
@@ -61,7 +60,11 @@
     </ion-card-content>
   </ion-card>
 
-
+  <ion-fab bottom right>
+    <button ion-fab (click)="scrollToTop()">
+      <ion-icon name="arrow-up"></ion-icon>
+    </button>
+  </ion-fab>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
