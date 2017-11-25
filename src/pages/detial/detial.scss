@@ -1,3 +1,21 @@
 page-detial {
+  // Input items
+  ion-item.send-message {
+    border-radius: 3px !important;
+    padding-left: 10px !important;
+    font-size: 0.9em;
+    .item-inner {
+      border-bottom: 0 !important;
+      box-shadow: none !important;
+    }
+    ion-textarea{
+      font-size: 1.6rem;
+      overflow-y: visible;
+      height: auto;
+      textarea{
+        grid-row: 1;
+      }
+    }
+  }
 
 }
