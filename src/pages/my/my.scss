@@ -1,8 +1,11 @@
 page-my {
-  ion-avatar{
-    img.self-head-icon{
-      width: 5rem;
-      height: 5rem;
+  ion-item.profile-item {
+    ion-avatar, ion-avatar img {
+      min-width: 6rem;
+      min-height: 6rem;
+    }
+    div.item-inner {
+      border: none!important;
     }
   }
 }

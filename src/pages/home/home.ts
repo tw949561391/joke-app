@@ -1,13 +1,14 @@
 import {Component, ViewChild} from '@angular/core';
-import {App, Content, LoadingController, ModalController, NavController} from 'ionic-angular';
+import {App, Content, ModalController, NavController, Refresher} from 'ionic-angular';
 import JokeService from "../../services/JokeService";
 import HomeContoller from "./home-contoller";
 import {ProfilePage} from "../profile/profile";
+import OauthService from "../../services/common/OauthService";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [JokeService]
+  providers: [JokeService, OauthService]
 })
 export class HomePage {
   items = [];
@@ -15,18 +16,19 @@ export class HomePage {
     pageNum: 1,
     pageSize: 10
   };
+
   filter = {
-    time_div: Date.now()
+    create_time: {
+      $lte: Date.now()
+    }
   };
 
   sort = {
     create_time: -1
   };
 
-
   @ViewChild(Content)
   public content: Content;
-
 
   constructor(public navCtrl: NavController,
               public ModalCtrl: ModalController,
@@ -34,35 +36,41 @@ export class HomePage {
               public app: App,
               public jokeService: JokeService) {
 
+    this.init().then(() => {
+      console.log('success')
+    })
   }
-
   ionViewDidLoad() {
-    this.homeCtrl.scrollUp.subscribe(() => {
-      this.scrollToTop();
-    });
-    this.jokeService.list({pagework: this.pagework, sort: this.sort}).subscribe((res: any) => {
-      res.forEach(item => {
-        this.items.push(item);
-      })
+  }
+  async init() {
+    this.filter.create_time.$lte = Date.now();
+    this.pagework.pageNum = 1;
+    let res: Array<any> = await this.jokeService.list({pagework: this.pagework, sort: this.sort, filter: this.filter});
+    this.items = []
+    res.forEach((item) => {
+      this.items.push(item);
     })
   }
 
 
-  doRefresh(refresher) {
-    setTimeout(() => {
+  doRefresh(refresher: Refresher) {
+    this.init().then(() => {
       refresher.complete();
-    }, 1000);
+    }).catch((e) => {
+      console.log(e)
+    })
   }
 
   doInfinite(infiniteScroll) {
     this.pagework.pageNum++;
-    this.jokeService.list({pagework: this.pagework, sort: this.sort}).subscribe((res: any) => {
+    this.jokeService.list({pagework: this.pagework, sort: this.sort, filter: this.filter}).then((res: any) => {
       res.forEach(item => {
         this.items.push(item);
       });
       infiniteScroll.complete();
     });
   }
+
 
   viewPerson(userId: string, $event) {
     if ($event) {
@@ -73,6 +81,7 @@ export class HomePage {
       disableApp: true
     });
   }
+
   viewDetial(item: any) {
     this.app.getRootNav().push("DetialPage", item, function () {
       console.log("ok")

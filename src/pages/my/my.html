@@ -6,29 +6,33 @@
     <ion-title>我</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content >
-  <ion-list no-border padding-top>
-    <ion-item no-border (click)="viewSelfDetial()">
-      <ion-avatar item-start >
-        <img class="self-head-icon" src="https://ionicframework.com/dist/preview-app/www/assets/img/marty-avatar.png">
+<ion-content no-padding>
+  <ion-refresher no-border (ionRefresh)="doRefresh($event)" pullMax="240" pullMin="60">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      refreshingSpinner="bubbles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-item class="profile-item" (click)="viewSelfDetial()" *ngIf="profile ;else noLoginItem" no-border>
+    <ion-avatar item-start>
+      <img class="self-head-icon"
+           src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZGF0YS1uYW1lPSJMaXZlbGxvIDEiIGlkPSJMaXZlbGxvXzEiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6bm9uZTtzdHJva2U6I2ZmZjtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDtzdHJva2Utd2lkdGg6MnB4O308L3N0eWxlPjwvZGVmcz48dGl0bGUvPjxwYXRoIGQ9Ik0wLDMyQTMyLDMyLDAsMSwwLDMyLDAsMzIsMzIsMCwwLDAsMCwzMloiLz48ZyBpZD0iVXNlciI+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNDYsNDIuMTh2NS45MWEwLjkxLDAuOTEsMCwwLDEtLjkuOTFIMThhMC45MSwwLjkxLDAsMCwxLS45LTAuOTFWNDIuMThjMC00Ljc3LDYuNDctOC42NCwxNC40NS04LjY0UzQ2LDM3LjQxLDQ2LDQyLjE4WiIvPjxlbGxpcHNlIGNsYXNzPSJjbHMtMSIgY3g9IjMxLjU1IiBjeT0iMjEuMTgiIHJ4PSI2LjQyIiByeT0iNi4xOCIvPjwvZz48L3N2Zz4=">
+    </ion-avatar>
+    <h2>{{profile.nickname}}</h2>
+    <p>这家伙太懒了，什么也不说...</p>
+    <ion-icon name='arrow-forward' item-end></ion-icon>
+  </ion-item>
+  <ng-template #noLoginItem>
+    <ion-item class="profile-item" (click)="toLogin()">
+      <ion-avatar item-start>
+        <img class="self-head-icon"
+             src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZGF0YS1uYW1lPSJMaXZlbGxvIDEiIGlkPSJMaXZlbGxvXzEiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6bm9uZTtzdHJva2U6I2ZmZjtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDtzdHJva2Utd2lkdGg6MnB4O308L3N0eWxlPjwvZGVmcz48dGl0bGUvPjxwYXRoIGQ9Ik0wLDMyQTMyLDMyLDAsMSwwLDMyLDAsMzIsMzIsMCwwLDAsMCwzMloiLz48ZyBpZD0iVXNlciI+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNDYsNDIuMTh2NS45MWEwLjkxLDAuOTEsMCwwLDEtLjkuOTFIMThhMC45MSwwLjkxLDAsMCwxLS45LTAuOTFWNDIuMThjMC00Ljc3LDYuNDctOC42NCwxNC40NS04LjY0UzQ2LDM3LjQxLDQ2LDQyLjE4WiIvPjxlbGxpcHNlIGNsYXNzPSJjbHMtMSIgY3g9IjMxLjU1IiBjeT0iMjEuMTgiIHJ4PSI2LjQyIiByeT0iNi4xOCIvPjwvZz48L3N2Zz4=">
       </ion-avatar>
-      <h1 class="username">TristanWong</h1>
-      <h2 class="username">TristanWong</h2>
+      <h2>未登录</h2>
+      <p>请先登陆哟</p>
+      <ion-icon name='arrow-forward' item-end></ion-icon>
     </ion-item>
-    <ion-item-divider>
-      Item Divider
-    </ion-item-divider>
-    <ion-item no-border>
-      <ion-icon name='settings' item-start></ion-icon>
-      <ion-label>App Language</ion-label>
-      <ion-select [(ngModel)]="language">
-        <ion-option *ngFor="let language of languages" [value]="language">{{language}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item no-border>
-      <ion-toggle [(ngModel)]="enableNotifications" (click)="toggleNotifications()"></ion-toggle>
-      <ion-label class="label"> Enable notifications </ion-label>
-      <ion-icon name='notifications' item-start></ion-icon>
-    </ion-item>
-  </ion-list>
+  </ng-template>
 </ion-content>

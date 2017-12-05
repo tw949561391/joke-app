@@ -1,4 +1,30 @@
 page-detial {
+
+  ion-card.detial-card {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-shadow: none;
+    ion-row.option-list {
+      ion-col {
+        text-align: center;
+      }
+    }
+    ion-item.top-list-head{
+      small{
+        margin-right: 6px;
+      }
+      ion-avatar{
+        margin-right: 6px;
+        img{
+          width: 32px;
+          height: 32px;
+          margin: 2px;
+        }
+      }
+    }
+  }
+
   // Input items
   ion-item.send-message {
     border-radius: 3px !important;
@@ -8,12 +34,33 @@ page-detial {
       border-bottom: 0 !important;
       box-shadow: none !important;
     }
-    ion-textarea{
-      font-size: 1.6rem;
-      overflow-y: visible;
-      height: auto;
-      textarea{
-        grid-row: 1;
+  }
+
+  $padding-avatar: 8px;
+  ion-list.talks-list {
+    ion-item {
+      padding-left: $padding-avatar;
+      ion-avatar {
+        margin-right: $padding-avatar !important;
+        img {
+          margin: 3px auto;
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+    }
+
+    ion-item.talk-item-head {
+      ion-label {
+        margin: 0 auto;
+      }
+    }
+
+    ion-item.talk-item-body {
+      ion-label {
+        margin-top: 0;
+        white-space: normal;
       }
     }
   }

@@ -1,5 +1,5 @@
-<ion-header>
-  <ion-navbar color="primary">
+<ion-header no-border>
+  <ion-navbar color="primary" >
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -37,34 +37,34 @@
     </ion-card-content>
     <ion-row>
       <ion-col>
-        <button ion-button icon-left clear small>
+        <button ion-button icon-left clear small color="dark">
           <ion-icon name="thumbs-up"></ion-icon>
           <div>12</div>
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-left clear small>
+        <button ion-button icon-left clear small color="dark">
           <ion-icon name="text"></ion-icon>
           <div>4</div>
         </button>
       </ion-col>
-
+      <ion-col>
+        <button ion-button icon-left clear small color="dark">
+          <ion-icon name="md-share"></ion-icon>
+          <div>4</div>
+        </button>
+      </ion-col>
       <ion-col col-3 align-self-center text-center>
         <p>
           {{item.create_time|timeline: 'yyyy-MM-dd'}}
         </p>
       </ion-col>
     </ion-row>
+
     <ion-card-content style="border-top: 1px solid #eee" *ngIf="item.comments">
 
     </ion-card-content>
   </ion-card>
-
-  <ion-fab bottom right>
-    <button ion-fab (click)="scrollToTop()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-fab>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
